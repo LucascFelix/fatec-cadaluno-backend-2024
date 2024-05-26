@@ -26,6 +26,34 @@ public class StudentService {
         );
     }
 
+    public void deleteStudentById(int id){
+        if (this.studentRepository.existsById(id)) {
+            this.studentRepository.deleteById(id);
+            
+        }
+        else {
+            throw new EntityNotFoundException("Aluno não Cadastrado");
+        }
+    }
+
+    public Student save(Student student){
+        return this.studentRepository.save(student);
+    }
+
+    public void update(int id, Student student){
+        try {
+            Student aux = studentRepository.getReferenceById(id);
+            aux.setCourse(student.getCourse());
+            aux.setName(student.getName());
+            this.studentRepository.save(aux);
+            
+        } catch (EntityNotFoundException e) {
+            
+            throw new EntityNotFoundException("Aluno não cadastrado");
+            
+        }
+    }
+
     
 
     
